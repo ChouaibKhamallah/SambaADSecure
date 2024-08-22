@@ -15,7 +15,12 @@ def launch_script_process():
 
   print(f'\n{Fore.RED}{Back.WHITE}{user_choices["create_domain"]}{Style.RESET_ALL}')
 
-  print(Style.RESET_ALL + "\nThe End!")
+  
 
 if __name__ == "__main__":
-  launch_script_process()
+
+  try:
+    launch_script_process()
+    print(Style.RESET_ALL + "\nThe End!")
+  except KeyboardInterrupt:
+    print(Style.RESET_ALL + "\nInterrupted - Ctrl+C pressed")

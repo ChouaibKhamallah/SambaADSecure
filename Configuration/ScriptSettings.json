@@ -7,18 +7,34 @@
     "Questions":
         {
             "create_domain": 
-                {"Are we building a new domain in a new forest?":["yes","no"]},
+                {
+                    "description":"Do you want to build a domain automatically?",
+                    "question":
+                        {"Are we building a new domain in a new forest?":["yes","no"]}
+                },
 
             "domain_full_name":
-                {"What is the Root Domain full Name of the forest?":["your.domain.here"]},
+                {   "description":"Enter a full domain name that contains a dot. example: MY.DOMAIN.LAN",
+                    "question":
+                        {"What is the Root Domain full Name of the forest?":["YOUR.DOMAIN.HERE"]},
+                    "regex": "^[^\\.]+\\.[^\\.]+$",
+                    "regex_validation":"contains"
+                },
 
             "domain_netbios_name":
-                {"What is the Root Domain NetBIOS name of the forest?":["your"]},
+                {   "description":"Enter a NETBIOS domain name that not contains a dot. example: DOMAIN",
+                    "question":
+                        {"What is the Root Domain NetBIOS name of the forest?":["DOMAIN"]},
+                    "regex": "\\.",
+                    "regex_validation":"notcontains"
+                },
 
             "domain_functional_level":
+                {"question":
                 {"The following Functional Level are available to you:":{
                     "0":"Windows 2008",
-                    "1":"Windows 2016"}}
+                    "1":"Windows 2016"}},
+                "regex":"no"}
         },
 
     "DomainFunctionalLevel":
