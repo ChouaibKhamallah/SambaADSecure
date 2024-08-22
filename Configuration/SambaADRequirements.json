@@ -1,0 +1,44 @@
+{
+    "debian":
+        {
+        "samba_repository":
+            {
+                "gpg_key":"https://samba.tranquil.it/tissamba-pubkey.gpg",
+                "repository_url":"https://samba.tranquil.it/debian/samba-4.19/bookworm main"
+            },
+        "system_packages":
+            ["locales-all",
+            "wget",
+            "sudo",
+            "screen",
+            "nmap",
+            "telnet",
+            "tcpdump",
+            "rsync",
+            "net-tools",
+            "dnsutils",
+            "htop",
+            "apt-transport-https",
+            "vim",
+            "gnupg",
+            "lsb-release"]
+        ,
+        "samba_packages":
+            ["samba",
+            "winbind",
+            "libnss-winbind",
+            "krb5-user",
+            "smbclient",
+            "ldb-tools",
+            "python3-cryptography"],
+        "services_to_disable":
+            ["avahi-daemon.service",
+            "avahi-daemon.socket",
+            "samba",
+            "winbind",
+            "nmbd",
+            "smbd"],
+        "services_to_enable":
+            ["samba-ad-dc"]
+        }
+}
