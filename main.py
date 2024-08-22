@@ -1,21 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from Functions.all_functions import *
-
-import argparse
-
-parser = argparse.ArgumentParser()
-
-parser.add_argument("--address", help="URL to be checked", required=True)
-parser.add_argument("--jsonauth", help="JSON Google Authentication file path")
-parser.add_argument("--verbosity", help="Verbosity", action="store_false")
-
-print(parser.prog)
-print("ok")
 
 with open('Configuration/ScriptSettings.json') as json_file:
   ScriptSettings = json.load(json_file)
+
+parser = argparse.ArgumentParser(description=ScriptSettings["Messages"]["Welcome"])
+parser.add_argument('--dryrun', action=argparse.BooleanOptionalAction,dest='dryrun',help='print your choices but does not actually perform the actions',default=False)
+args = parser.parse_args()
 
 def launch_script_process():
   start_script_message(ScriptSettings)
@@ -26,5 +18,4 @@ def launch_script_process():
   print(Style.RESET_ALL + "\nThe End!")
 
 if __name__ == "__main__":
-  pass
-  #launch_script_process()
+  launch_script_process()

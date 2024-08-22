@@ -6,7 +6,7 @@ import argparse
 def start_script_message(ScriptSettings):
 
 
-    print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome!"]}')
+    print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome"]}')
 
 def get_user_choices(ScriptSettings):
 
