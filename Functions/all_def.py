@@ -3,12 +3,12 @@ import json
 from colorama import Fore, Back, Style
 import argparse
 import re
+import sys
+import os
 
 def start_script_message(ScriptSettings):
-
-
     print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome"]}')
-
+    
 def get_user_choices(ScriptSettings):
 
     user_choices = {}
@@ -52,21 +52,20 @@ def get_user_choices(ScriptSettings):
                     user_input = input(f'{Fore.CYAN}{question} {Fore.WHITE}{ScriptSettings["Questions"][section]["question"][question]}: {Fore.GREEN}')
                     
                     if "regex" in ScriptSettings["Questions"][section]:
-                        if ScriptSettings["Questions"][section]["regex_validation"] == "contains":
-                            if re.search(ScriptSettings["Questions"][section]["regex"],user_input):
-                                break
-                        if ScriptSettings["Questions"][section]["regex_validation"] == "notcontains":
-                            if not re.search(ScriptSettings["Questions"][section]["regex"],user_input):
-                                break
-                    elif not user_input == "":
+                        if is_matching_input(user_input=user_input,regex=ScriptSettings["Questions"][section]["regex"]):
+                            break
+                        else:
+                            print(f'{Fore.WHITE}{Back.RED}Invalid input, Please enter valid data{Style.RESET_ALL}')
+
+                    elif user_input != "":
                         break
+
                     else:
                         print(f'{Fore.WHITE}{Back.RED}Invalid input, Please enter valid data{Style.RESET_ALL}')
                         
-
         user_choices[section] = user_input
     
     return user_choices
 
-def help():
-    pass
+def is_matching_input(regex=None,user_input=None):
+    return re.match(regex, user_input) is not None

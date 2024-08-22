@@ -17,16 +17,14 @@
                 {   "description":"Enter a full domain name that contains a dot. example: MY.DOMAIN.LAN",
                     "question":
                         {"What is the Root Domain full Name of the forest?":["YOUR.DOMAIN.HERE"]},
-                    "regex": "^[^\\.]+\\.[^\\.]+$",
-                    "regex_validation":"contains"
+                    "regex": "^(?:[A-Za-z0-9](?:[A-Za-z0-9]{0,61}[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\\.(?:[A-Za-z]{2,}\\.)?[A-Za-z]{2,}$"
                 },
 
             "domain_netbios_name":
                 {   "description":"Enter a NETBIOS domain name that not contains a dot. example: DOMAIN",
                     "question":
                         {"What is the Root Domain NetBIOS name of the forest?":["DOMAIN"]},
-                    "regex": "\\.",
-                    "regex_validation":"notcontains"
+                    "regex": "^[A-Za-z0-9]{1,15}$"
                 },
 
             "domain_functional_level":

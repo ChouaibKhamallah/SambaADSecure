@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from Functions.all_functions import *
+from Functions.all_def import *
+
+if "__file__" in locals():
+    sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 with open('Configuration/ScriptSettings.json') as json_file:
   ScriptSettings = json.load(json_file)
