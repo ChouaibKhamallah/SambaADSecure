@@ -1,7 +1,18 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from Functions.functions import *
+from Functions.all_functions import *
+
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--address", help="URL to be checked", required=True)
+parser.add_argument("--jsonauth", help="JSON Google Authentication file path")
+parser.add_argument("--verbosity", help="Verbosity", action="store_false")
+
+print(parser.prog)
+print("ok")
 
 with open('Configuration/ScriptSettings.json') as json_file:
   ScriptSettings = json.load(json_file)
@@ -15,4 +26,5 @@ def launch_script_process():
   print(Style.RESET_ALL + "\nThe End!")
 
 if __name__ == "__main__":
-    launch_script_process()
+  pass
+  #launch_script_process()

@@ -1,8 +1,10 @@
 
 import json
 from colorama import Fore, Back, Style
+import argparse
 
 def start_script_message(ScriptSettings):
+
 
     print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome!"]}')
 
@@ -51,3 +53,6 @@ def get_user_choices(ScriptSettings):
         user_choices[section] = user_input
     
     return user_choices
+
+def help():
+    pass
