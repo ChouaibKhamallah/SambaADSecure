@@ -2,10 +2,9 @@
 # -*- coding: utf-8 -*-
 from Functions.all_def import *
 
-if "__file__" in locals():
-    sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
+script_directory = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-with open('Configuration/ScriptSettings.json') as json_file:
+with open(f'{script_directory}/Configuration/ScriptSettings.json') as json_file:
   ScriptSettings = json.load(json_file)
 
 parser = argparse.ArgumentParser(description=ScriptSettings["Messages"]["Welcome"])
@@ -17,8 +16,6 @@ def launch_script_process():
   user_choices = get_user_choices(ScriptSettings)
 
   print(f'\n{Fore.RED}{Back.WHITE}{user_choices["create_domain"]}{Style.RESET_ALL}')
-
-  
 
 if __name__ == "__main__":
 
