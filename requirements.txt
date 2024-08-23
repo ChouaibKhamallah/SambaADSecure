@@ -1,1 +1,2 @@
 python3-colorama
+python3-netifaces

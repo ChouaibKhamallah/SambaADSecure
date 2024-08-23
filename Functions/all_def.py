@@ -13,12 +13,14 @@ script_directory = os.path.dirname(os.path.abspath(sys.argv[0]))
 global ScriptSettings
 global SambaADRequirements
 global args
+global user_choices 
 
 with open(f'{script_directory}/Configuration/ScriptSettings.json') as json_file:
   ScriptSettings = json.load(json_file)
 
 with open(f'{script_directory}/Configuration/SambaADRequirements.json') as json_file:
   SambaADRequirements = json.load(json_file)
+  
 parser = argparse.ArgumentParser(description=ScriptSettings["Messages"]["Welcome"])
 parser.add_argument('--dryrun', action=argparse.BooleanOptionalAction,dest='dryrun',help='print your choices but does not actually perform the actions',default=False)
 args = parser.parse_args()
@@ -30,7 +32,6 @@ def start_script_message(ScriptSettings):
 
 def get_user_choices(ScriptSettings):
 
-    global user_choices 
     user_choices = {}
     for section in ScriptSettings["Questions"]:
 
@@ -169,8 +170,7 @@ def set_hostname(host_infos,ScriptSettings):
     
     user_choices["hostname"] = user_input
 
-    if f'{user_choices["hostname"]}{user_choices["domain_full_name"]}' != host_infos["hostname"]:
+    if f'{user_choices["hostname"]}.{user_choices["domain_full_name"]}' != host_infos["hostname"]:
         print(f'SET HOSTNAME {user_choices["hostname"]}{user_choices["domain_full_name"]}')
         if not dryrun:
-            result = run(['hostnamectl','set-hostname',f'{user_choices["hostname"]}{user_choices["domain_full_name"]}'])
-            print(result.stdout)
+            run(['hostnamectl','set-hostname',f'{user_choices["hostname"]}.{user_choices["domain_full_name"]}'])
