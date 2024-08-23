@@ -13,7 +13,7 @@ script_directory = os.path.dirname(os.path.abspath(sys.argv[0]))
 global ScriptSettings
 global SambaADRequirements
 global args
-global user_choices 
+
 
 with open(f'{script_directory}/Configuration/ScriptSettings.json') as json_file:
   ScriptSettings = json.load(json_file)
@@ -31,7 +31,7 @@ def start_script_message(ScriptSettings):
     print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome"]}')
 
 def get_user_choices(ScriptSettings):
-
+    global user_choices 
     user_choices = {}
     for section in ScriptSettings["Questions"]:
 
@@ -171,7 +171,7 @@ def set_hostname(host_infos,ScriptSettings):
     user_choices["hostname"] = user_input
 
     if f'{user_choices["hostname"]}.{user_choices["domain_full_name"]}' != host_infos["hostname"]:
-        
+
         print(f'SET HOSTNAME {user_choices["hostname"]}{user_choices["domain_full_name"]}')
 
         while True:
