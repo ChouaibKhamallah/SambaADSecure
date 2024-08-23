@@ -69,5 +69,12 @@ def get_user_choices(ScriptSettings):
     return user_choices
 
 def get_host_infos():
-    ips = check_output(['hostname', '--all-ip-addresses'])
-    return ips
+
+    host_infos = {}
+
+    host_infos["ip_addresses"]  =    check_output(['hostname', '--all-ip-addresses']).decode('utf-8').split()
+    host_infos["hostname"]      =    check_output(['hostname', '--short']).decode('utf-8')[:-1]
+    host_infos["domain"]        =    check_output(['hostname', '--domain']).decode('utf-8')[:-1]
+    host_infos["fqdn"]          =    check_output(['hostname', '--fqdn']).decode('utf-8')[:-1]
+
+    return host_infos
