@@ -21,7 +21,8 @@ def launch_script_process():
   host_infos = get_host_infos()
 
   print(host_infos["distribution_codename"])
-  print(f"{SambaADRequirements[host_infos["distribution_id"]["samba_repository"]]}")
+  print(f"{SambaADRequirements[host_infos['distribution'].lower()]['samba_repository'][host_infos['distribution_codename']]['repository_url']}")
+
 
 if __name__ == "__main__":
 
