@@ -13,9 +13,9 @@ args = parser.parse_args()
 
 def launch_script_process():
   start_script_message(ScriptSettings)
-  user_choices = get_user_choices(ScriptSettings)
+  #user_choices = get_user_choices(ScriptSettings)
 
-  print(f'\n{Fore.RED}{Back.WHITE}{user_choices["create_domain"]}{Style.RESET_ALL}')
+  print(get_host_infos())
 
 if __name__ == "__main__":
 
