@@ -156,12 +156,12 @@ def disable_ipv6():
 
 def set_hostname(host_infos,ScriptSettings):
 
-    print(f"\n{Fore.GREEN}{ScriptSettings["choices_details"]["hostname"]["description"]}")
+    print(f"\n{Fore.GREEN}{ScriptSettings['choices_details']['hostname']['description']}")
 
     for question in ScriptSettings["choices_details"]["hostname"]["question"]:
         
         while True:
-            user_input = input(f"{Fore.CYAN}{question} {Fore.WHITE}{ScriptSettings["choices_details"]["hostname"]["question"][question]}: {Fore.GREEN}")
+            user_input = input(f"{Fore.CYAN}{question} {Fore.WHITE}{ScriptSettings['choices_details']['hostname']['question'][question]}: {Fore.GREEN}")
             if re.match(ScriptSettings["choices_details"]["hostname"]["regex"],user_input) is not None:
                 break
             else:
@@ -169,8 +169,8 @@ def set_hostname(host_infos,ScriptSettings):
     
     user_choices["hostname"] = user_input
 
-    if f"{user_choices["hostname"]}{user_choices["domain_full_name"]}" != host_infos["hostname"]:
-        print(f"SET HOSTNAME {user_choices["hostname"]}{user_choices["domain_full_name"]}")
+    if f'{user_choices["hostname"]}{user_choices["domain_full_name"]}' != host_infos["hostname"]:
+        print(f'SET HOSTNAME {user_choices["hostname"]}{user_choices["domain_full_name"]}')
         if not dryrun:
-            result = run(['hostnamectl','set-hostname',f"{user_choices["hostname"]}{user_choices["domain_full_name"]}"])
+            result = run(['hostnamectl','set-hostname',f'{user_choices["hostname"]}{user_choices["domain_full_name"]}'])
             print(result.stdout)
