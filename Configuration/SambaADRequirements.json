@@ -4,7 +4,7 @@
         "samba_repository":
             {
                 "gpg_key":"https://samba.tranquil.it/tissamba-pubkey.gpg",
-                "repository_url":"https://samba.tranquil.it/debian/samba-4.19/bookworm main"
+                "repository_url":"https://samba.tranquil.it/debian/samba-4.19/{host_info['distribution_codename']} main"
             },
         "system_packages":
             ["locales-all",

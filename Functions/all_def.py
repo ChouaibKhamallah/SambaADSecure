@@ -9,7 +9,7 @@ from subprocess import check_output
 
 def start_script_message(ScriptSettings):
     print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome"]}')
-    
+
 def get_user_choices(ScriptSettings):
 
     user_choices = {}
@@ -73,8 +73,12 @@ def get_host_infos():
     host_infos = {}
 
     host_infos["ip_addresses"]  =    check_output(['hostname', '--all-ip-addresses']).decode('utf-8').split()
-    host_infos["hostname"]      =    check_output(['hostname', '--short']).decode('utf-8')[:-1]
-    host_infos["domain"]        =    check_output(['hostname', '--domain']).decode('utf-8')[:-1]
-    host_infos["fqdn"]          =    check_output(['hostname', '--fqdn']).decode('utf-8')[:-1]
+    host_infos["hostname"]      =    check_output(['cat', '/etc/hostname']).decode('utf-8').replace("\n","")
+    host_infos["distribution"]  =    check_output(['lsb_release', '-s','-i']).decode('utf-8').replace("\n","")
+    host_infos["distribution_codename"]  =    check_output(['lsb_release', '-s','-c']).decode('utf-8').replace("\n","")
+    host_infos["distribution_release"]  =    check_output(['lsb_release', '-s','-r']).decode('utf-8').replace("\n","")
 
     return host_infos
+
+def disable_ipv6():
+    pass
