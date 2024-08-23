@@ -20,7 +20,7 @@ with open(f'{script_directory}/Configuration/ScriptSettings.json') as json_file:
 
 with open(f'{script_directory}/Configuration/SambaADRequirements.json') as json_file:
   SambaADRequirements = json.load(json_file)
-  
+
 parser = argparse.ArgumentParser(description=ScriptSettings["Messages"]["Welcome"])
 parser.add_argument('--dryrun', action=argparse.BooleanOptionalAction,dest='dryrun',help='print your choices but does not actually perform the actions',default=False)
 args = parser.parse_args()
@@ -171,6 +171,17 @@ def set_hostname(host_infos,ScriptSettings):
     user_choices["hostname"] = user_input
 
     if f'{user_choices["hostname"]}.{user_choices["domain_full_name"]}' != host_infos["hostname"]:
+        
         print(f'SET HOSTNAME {user_choices["hostname"]}{user_choices["domain_full_name"]}')
-        if not dryrun:
-            run(['hostnamectl','set-hostname',f'{user_choices["hostname"]}.{user_choices["domain_full_name"]}'])
+
+        while True:
+            user_input = input(f"{Fore.CYAN}Do you want to confirm to rename server from {host_infos['hostname']} to {user_choices['hostname']}.{user_choices['domain_full_name']} ? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
+            if user_input.lower() in ["yes", "y"]:
+                if not dryrun:
+                    run(['hostnamectl','set-hostname',f'{user_choices["hostname"]}.{user_choices["domain_full_name"]}'])
+                    break
+            elif user_input.lower() in ["no", "n"]:
+                break
+            else:
+                print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
+            
