@@ -5,15 +5,33 @@ import argparse
 import re
 import sys
 import os
-from subprocess import check_output
+from subprocess import check_output,run
+import netifaces
+
+script_directory = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+global ScriptSettings
+global SambaADRequirements
+global args
+
+with open(f'{script_directory}/Configuration/ScriptSettings.json') as json_file:
+  ScriptSettings = json.load(json_file)
+
+with open(f'{script_directory}/Configuration/SambaADRequirements.json') as json_file:
+  SambaADRequirements = json.load(json_file)
+parser = argparse.ArgumentParser(description=ScriptSettings["Messages"]["Welcome"])
+parser.add_argument('--dryrun', action=argparse.BooleanOptionalAction,dest='dryrun',help='print your choices but does not actually perform the actions',default=False)
+args = parser.parse_args()
+
+dryrun = args.dryrun
 
 def start_script_message(ScriptSettings):
     print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome"]}')
 
 def get_user_choices(ScriptSettings):
 
+    global user_choices 
     user_choices = {}
-
     for section in ScriptSettings["Questions"]:
 
         if "description" in ScriptSettings["Questions"][section]:
@@ -63,7 +81,8 @@ def get_user_choices(ScriptSettings):
 
                     else:
                         print(f'{Fore.WHITE}{Back.RED}Invalid input, Please enter valid data{Style.RESET_ALL}')
-        print(Style.RESET_ALL)                
+
+        print(f"{Style.RESET_ALL}")
         user_choices[section] = user_input
     
     return user_choices
@@ -72,13 +91,86 @@ def get_host_infos():
 
     host_infos = {}
 
-    host_infos["ip_addresses"]  =    check_output(['hostname', '--all-ip-addresses']).decode('utf-8').split()
-    host_infos["hostname"]      =    check_output(['cat', '/etc/hostname']).decode('utf-8').replace("\n","")
-    host_infos["distribution"]  =    check_output(['lsb_release', '-s','-i']).decode('utf-8').replace("\n","")
-    host_infos["distribution_codename"]  =    check_output(['lsb_release', '-s','-c']).decode('utf-8').replace("\n","")
+    host_infos["ip_addresses"]          =    check_output(['hostname', '--all-ip-addresses']).decode('utf-8').split()
+    host_infos["hostname"]              =    check_output(['cat', '/etc/hostname']).decode('utf-8').replace("\n","")
+    host_infos["distribution"]          =    check_output(['lsb_release', '-s','-i']).decode('utf-8').replace("\n","")
+    host_infos["distribution_codename"] =    check_output(['lsb_release', '-s','-c']).decode('utf-8').replace("\n","")
     host_infos["distribution_release"]  =    check_output(['lsb_release', '-s','-r']).decode('utf-8').replace("\n","")
 
     return host_infos
 
+def interface_configuration(host_infos):
+
+    while True:
+
+        if len(host_infos["ip_addresses"]) > 0:
+
+            print(f'{Fore.WHITE}Multiple ips detected, please select an interface to deploy Samba-AD\n')
+
+            for ip in host_infos["ip_addresses"]:
+                print(f'{Fore.CYAN}{host_infos["ip_addresses"].index(ip)} {Fore.YELLOW}{ip}')
+
+            print()
+
+            while True:
+                user_input = input(f'{Fore.CYAN}Choose an option... {Fore.WHITE}{list(range(0,len(host_infos["ip_addresses"])))}: {Fore.GREEN}')
+                if user_input in [str(x) for x in list(range(0,len(host_infos["ip_addresses"])))]:
+                    break
+                else:
+                    print(type(user_input))
+                    print(f'{Fore.WHITE}{Back.RED}Invalid input, Please enter valid data{Style.RESET_ALL}')
+
+            user_choices["sambaad_ip"] = host_infos['ip_addresses'][int(user_input)]
+        else:
+            user_choices["sambaad_ip"] = host_infos['ip_addresses'][0]
+
+        for iface in netifaces.interfaces():
+            for details in netifaces.ifaddresses(iface):
+                if netifaces.ifaddresses(iface)[details][0]['addr'] == user_choices["sambaad_ip"]:
+                    user_choices["sambaad_interface"] = iface
+
+        print(f'\n{Fore.GREEN}Selected IP: {user_choices["sambaad_ip"]}')
+        print(f'{Fore.GREEN}Interface: {user_choices["sambaad_interface"]}\n')
+
+        user_input = input(f"{Fore.CYAN}Do you confirm? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
+        if user_input.lower() in ["yes", "y"]:
+            break
+        elif user_input.lower() in ["no", "n"]:
+            continue
+        else:
+            print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
+
+    while True:
+        user_input = input(f"{Fore.CYAN}Do you want to disable ipv6? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
+        if user_input.lower() in ["yes", "y"]:
+            user_choices["disable_ipv6"] = True
+            break
+        elif user_input.lower() in ["no", "n"]:
+            user_choices["disable_ipv6"] = False
+            break
+        else:
+            print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
+
 def disable_ipv6():
     pass
+
+def set_hostname(host_infos,ScriptSettings):
+
+    print(f"\n{Fore.GREEN}{ScriptSettings["choices_details"]["hostname"]["description"]}")
+
+    for question in ScriptSettings["choices_details"]["hostname"]["question"]:
+        
+        while True:
+            user_input = input(f"{Fore.CYAN}{question} {Fore.WHITE}{ScriptSettings["choices_details"]["hostname"]["question"][question]}: {Fore.GREEN}")
+            if re.match(ScriptSettings["choices_details"]["hostname"]["regex"],user_input) is not None:
+                break
+            else:
+                print(f'{Fore.WHITE}{Back.RED}Invalid input, Please enter valid data{Style.RESET_ALL}')
+    
+    user_choices["hostname"] = user_input
+
+    if f"{user_choices["hostname"]}{user_choices["domain_full_name"]}" != host_infos["hostname"]:
+        print(f"SET HOSTNAME {user_choices["hostname"]}{user_choices["domain_full_name"]}")
+        if not dryrun:
+            result = run(['hostnamectl','set-hostname',f"{user_choices["hostname"]}{user_choices["domain_full_name"]}"])
+            print(result.stdout)

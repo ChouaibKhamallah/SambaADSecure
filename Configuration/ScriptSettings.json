@@ -34,6 +34,16 @@
                     "1":"Windows 2016"}},
                 "regex":"no"}
         },
+    
+    "choices_details":
+        {
+        "hostname":
+            {   "description": "Enter a server hostname that not contains a dot. example: SRVADS1",
+                "question":
+                        {"What is the server hostname ?":["SRVADS1"]},
+                "regex": "^[A-Za-z0-9]{1,15}$"
+            }
+        },
 
     "DomainFunctionalLevel":
         {
