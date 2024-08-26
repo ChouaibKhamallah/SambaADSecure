@@ -26,10 +26,13 @@ with open(f'{script_directory}/Configuration/SambaADRequirements.json') as json_
 parser = argparse.ArgumentParser(description=ScriptSettings["Messages"]["Welcome"])
 parser.add_argument('--dryrun', action=argparse.BooleanOptionalAction,dest='dryrun',help='print your choices but does not actually perform the actions',default=False)
 parser.add_argument('--init-install', action=argparse.BooleanOptionalAction,dest='init',help='initiate the script for install OS prerequites before install Samba-AD',default=False)
+parser.add_argument('--debug', action=argparse.BooleanOptionalAction,dest='debug',help='add more infos',default=False)
+
 args = parser.parse_args()
 
 dryrun = args.dryrun
 init = args.init
+debug = args.debug
 
 def question_yes_no():
     pass
@@ -199,6 +202,13 @@ def download_file(url=None,destination=None,sha256=None):
 
 def add_samba_repository(SambaADRequirements,host_infos):
 
-    download_file(url=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["gpg_key"],destination=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["gpg_key_dest"],sha256=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["sha256"])
+    if debug:
+        print(SambaADRequirements)
+
+
+    download_file(  url=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["gpg_key"],
+                    destination=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["gpg_key_dest"],
+                    sha256=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["sha256"]
+                )
     
 
