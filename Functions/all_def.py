@@ -216,12 +216,14 @@ def download_file(url=None,destination=None,sha256=None):
             print(f'HASH OK : {readable_hash}')
         else:
             print(f'NOT OK')
-            
+
 def add_samba_repository(SambaADRequirements,host_infos):
 
     download_file(  url=SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key"],
                     destination=SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"],
                     sha256=SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
                 )
+    
+    run(f'echo "deb [signed-by={SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"]}] {SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["url"]} main" > /etc/apt/sources.list.d/tissamba.list"')
 
 
