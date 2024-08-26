@@ -24,7 +24,7 @@
                 {   "description":"Enter a NETBIOS domain name that not contains a dot. example: DOMAIN",
                     "question":
                         {"What is the Root Domain NetBIOS name of the forest?":["DOMAIN"]},
-                    "regex": "^[A-Za-z0-9]{1,15}$"
+                    "regex": "^[A-Za-z0-9][A-Za-z0-9-]{0,14}$"
                 },
 
             "domain_functional_level":
