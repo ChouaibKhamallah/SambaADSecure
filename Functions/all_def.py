@@ -196,19 +196,14 @@ def set_hostname(host_infos,ScriptSettings):
                 print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
 
 def download_file(url=None,destination=None,sha256=None):
-    
-    downloaded_file = urllib.URLopener()
-    downloaded_file.retrieve(url, destination)
+
+    urllib.retrieve(url, destination)
 
 def add_samba_repository(SambaADRequirements,host_infos):
 
-    if debug:
-        print(SambaADRequirements)
-
-
-    download_file(  url=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["gpg_key"],
-                    destination=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["gpg_key_dest"],
-                    sha256=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["sha256"]
+    download_file(  url=SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key"],
+                    destination=SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"],
+                    sha256=SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
                 )
     
 
