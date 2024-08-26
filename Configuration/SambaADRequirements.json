@@ -4,6 +4,8 @@
         "repository":
             {
                 "gpg_key":"https://samba.tranquil.it/tissamba-pubkey.gpg",
+                "gpg_key_dest" : "/usr/share/keyrings/tissamba.gpg",
+                "sha256" : "bd0f7140edd098031fcb36106b24a6837b067f1c847f72cf262fa012f14ce2dd",
                 "bookworm":
                     {
                     "url":"https://samba.tranquil.it/debian/samba-4.20/bookworm main"

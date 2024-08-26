@@ -7,6 +7,8 @@ import sys
 import os
 from subprocess import check_output,run
 import netifaces
+import urllib
+import hashlib
 
 script_directory = os.path.dirname(os.path.abspath(sys.argv[0]))
 
@@ -189,4 +191,14 @@ def set_hostname(host_infos,ScriptSettings):
                 break
             else:
                 print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
-            
+
+def download_file(url=None,destination=None,sha256=None):
+    
+    downloaded_file = urllib.URLopener()
+    downloaded_file.retrieve(url, destination)
+
+def add_samba_repository(SambaADRequirements,host_infos):
+
+    download_file(url=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["gpg_key"],destination=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["gpg_key_dest"],sha256=SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["sha256"])
+    
+
