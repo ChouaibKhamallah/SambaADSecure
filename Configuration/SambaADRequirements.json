@@ -9,11 +9,11 @@
                 "file" : "/etc/apt/sources.list.d/tissamba.list",
                 "bookworm":
                     {
-                    "url":"https://samba.tranquil.it/debian/samba-4.20/bookworm main"
+                    "url":"https://samba.tranquil.it/debian/samba-4.20/ bookworm main"
                     },
                 "bullseye":
                     {
-                    "url":"https://samba.tranquil.it/debian/samba-4.20/bullseye main"
+                    "url":"https://samba.tranquil.it/debian/samba-4.20/ bullseye main"
                     }
             },
         "system_packages":
