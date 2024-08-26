@@ -172,7 +172,7 @@ def set_hostname(host_infos,ScriptSettings):
 
     if f'{user_choices["hostname"]}.{user_choices["domain_full_name"]}' != host_infos["hostname"]:
 
-        print(f'SET HOSTNAME {user_choices["hostname"]}{user_choices["domain_full_name"]}')
+        print(f'SET HOSTNAME {user_choices["hostname"]}.{user_choices["domain_full_name"]}')
 
         while True:
             user_input = input(f"{Fore.CYAN}Do you want to confirm to rename server from {host_infos['hostname']} to {user_choices['hostname']}.{user_choices['domain_full_name']} ? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
