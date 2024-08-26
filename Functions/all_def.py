@@ -213,9 +213,9 @@ def download_file(url=None,destination=None,sha256=None):
             readable_hash = hashlib.sha256(bytes).hexdigest()
 
         if readable_hash == sha256:
-            print(f'HASH OK : {readable_hash}')
+            print(f'HASH OK for file {destination} : {readable_hash}')
         else:
-            print(f'NOT OK')
+            print(f'HASH NOT OK for file {destination}')
 
 def add_samba_repository(SambaADRequirements,host_infos):
 
