@@ -230,5 +230,5 @@ def add_samba_repository(SambaADRequirements,host_infos):
                     sha256=gpg_key_sha256
                 )
     
-    with open(repository_file, "a") as repo:
+    with open(repository_file, "w") as repo:
         repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}\n')
