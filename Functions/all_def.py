@@ -101,7 +101,7 @@ def get_host_infos():
 
     host_infos["ip_addresses"]          =    check_output(['hostname', '--all-ip-addresses']).decode('utf-8').split()
     host_infos["hostname"]              =    check_output(['cat', '/etc/hostname']).decode('utf-8').replace("\n","")
-    host_infos["distribution"]          =    check_output(['lsb_release', '-s','-i']).decode('utf-8').replace("\n","")
+    host_infos["distribution"]          =    check_output(['lsb_release', '-s','-i']).decode('utf-8').replace("\n","").lower()
     host_infos["distribution_codename"] =    check_output(['lsb_release', '-s','-c']).decode('utf-8').replace("\n","")
     host_infos["distribution_release"]  =    check_output(['lsb_release', '-s','-r']).decode('utf-8').replace("\n","")
 
