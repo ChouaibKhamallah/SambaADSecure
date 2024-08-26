@@ -231,4 +231,4 @@ def add_samba_repository(SambaADRequirements,host_infos):
                 )
     
     with open(repository_file, "w") as repo:
-        repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}\n')
+        repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}')
