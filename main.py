@@ -19,6 +19,7 @@ def launch_script_process():
     if user_choices['create_domain']:
       interface_configuration(host_infos)
       set_hostname(host_infos,ScriptSettings)
+      add_samba_repository(SambaADRequirements,host_infos)
 
 if __name__ == "__main__":
 
