@@ -6,7 +6,11 @@
                 "gpg_key":"https://samba.tranquil.it/tissamba-pubkey.gpg",
                 "bookworm":
                     {
-                    "url":"https://samba.tranquil.it/debian/samba-4.19/bookworm main"
+                    "url":"https://samba.tranquil.it/debian/samba-4.20/bookworm main"
+                    },
+                "bullseye":
+                    {
+                    "url":"https://samba.tranquil.it/debian/samba-4.20/bullseye main"
                     }
             },
         "system_packages":
