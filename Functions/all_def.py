@@ -220,6 +220,7 @@ def download_file(url=None,destination=None,sha256=None):
 def add_samba_repository(SambaADRequirements,host_infos):
 
     repository_url = SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["url"]
+    repository_file = gpg_key_url = SambaADRequirements[host_infos["distribution"]]["repository"]["file"]
     gpg_key_url = SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key"]
     gpg_key_file = SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"]
     gpg_key_sha256 = SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
@@ -229,6 +230,5 @@ def add_samba_repository(SambaADRequirements,host_infos):
                     sha256=gpg_key_sha256
                 )
     
-    run(f'echo "deb [signed-by={gpg_key_file}] {repository_url}" > /etc/apt/sources.list.d/tissamba.list')
-
-
+    with open(repository_file, "a") as repo:
+        repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}')
