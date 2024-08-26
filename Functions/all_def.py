@@ -23,9 +23,14 @@ with open(f'{script_directory}/Configuration/SambaADRequirements.json') as json_
 
 parser = argparse.ArgumentParser(description=ScriptSettings["Messages"]["Welcome"])
 parser.add_argument('--dryrun', action=argparse.BooleanOptionalAction,dest='dryrun',help='print your choices but does not actually perform the actions',default=False)
+parser.add_argument('--init-install', action=argparse.BooleanOptionalAction,dest='init',help='initiate the script for install OS prerequites before install Samba-AD',default=False)
 args = parser.parse_args()
 
 dryrun = args.dryrun
+init = args.init
+
+def question_yes_no():
+    pass
 
 def start_script_message(ScriptSettings):
     print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome"]}')

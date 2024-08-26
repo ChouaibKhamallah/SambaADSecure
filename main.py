@@ -5,19 +5,20 @@ from Functions.all_def import *
 
 def launch_script_process():
 
-  start_script_message(ScriptSettings)
-  user_choices = get_user_choices(ScriptSettings)
+  if init:
+    start_script_message(ScriptSettings)
+    user_choices = get_user_choices(ScriptSettings)
 
-  host_infos = get_host_infos()
+    host_infos = get_host_infos()
 
-  if args.dryrun:
-    host_infos["distribution_codename"] = "bookworm"
-    host_infos['distribution'] = "debian"
-    print(f"{SambaADRequirements[host_infos['distribution'].lower()]['repository'][host_infos['distribution_codename']]['url']}")
+    if args.dryrun:
+      host_infos["distribution_codename"] = "bookworm"
+      host_infos['distribution'] = "debian"
+      print(f"{SambaADRequirements[host_infos['distribution'].lower()]['repository'][host_infos['distribution_codename']]['url']}")
 
-  if user_choices['create_domain']:
-    interface_configuration(host_infos)
-    set_hostname(host_infos,ScriptSettings)
+    if user_choices['create_domain']:
+      interface_configuration(host_infos)
+      set_hostname(host_infos,ScriptSettings)
 
 if __name__ == "__main__":
 
