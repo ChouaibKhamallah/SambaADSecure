@@ -7,7 +7,7 @@ import sys
 import os
 from subprocess import check_output,run
 import netifaces
-import urllib
+import requests
 import hashlib
 
 script_directory = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -197,13 +197,31 @@ def set_hostname(host_infos,ScriptSettings):
 
 def download_file(url=None,destination=None,sha256=None):
 
-    urllib.retrieve(url, destination)
+    response = requests.get(url)
+    file_Path = destination
+ 
+    if response.status_code == 200:
+        with open(file_Path, 'wb') as file:
+            file.write(response.content)
+        print(f'File {destination} downloaded successfully')
+    else:
+        print('Failed to download {url}')
 
+    if sha256 is not None:
+        with open(destination, "rb") as f:
+            bytes = f.read()
+            readable_hash = hashlib.sha256(bytes).hexdigest()
+
+        if readable_hash == sha256:
+            print(f'HASH OK : {readable_hash}')
+        else:
+            print(f'NOT OK')
+            
 def add_samba_repository(SambaADRequirements,host_infos):
 
     download_file(  url=SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key"],
                     destination=SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"],
                     sha256=SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
                 )
-    
+
 
