@@ -224,6 +224,6 @@ def add_samba_repository(SambaADRequirements,host_infos):
                     sha256=SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
                 )
     
-    run(f'echo "deb [signed-by={SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"]}] {SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["url"]} main" > /etc/apt/sources.list.d/tissamba.list"')
+    run(f'echo "deb [signed-by={SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"]}] {SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["url"]}" > /etc/apt/sources.list.d/tissamba.list')
 
 
