@@ -185,12 +185,13 @@ class System:
                     print(e)
                     print(f'❌ {Fore.WHITE}SYSCTL Failed to set {config} to value {ipv6_configuration[config]}')
 
-                try:
-                    run('sysctl','--system')
-                    print(f'✅ {Fore.WHITE}SYSCTL FORCE RELOAD CONFIGURATION')
-                except Exception as e:
-                    print(e)
-                    print(f'❌ {Fore.WHITE}SYSCTL FAILED TO FORCE RELOAD CONFIGURATION')
+        if not dryrun:
+            try:
+                run('sysctl','--system')
+                print(f'✅ {Fore.WHITE}SYSCTL FORCE RELOAD CONFIGURATION')
+            except Exception as e:
+                print(e)
+                print(f'❌ {Fore.WHITE}SYSCTL FAILED TO FORCE RELOAD CONFIGURATION')
         
         """configuration_file = "/etc/sysctl.conf"
 
