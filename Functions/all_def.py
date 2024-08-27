@@ -311,9 +311,9 @@ class System:
         for service in services:
             service_is_active = True
             if call(["systemctl","is-active","--quiet",service],stdout=DEVNULL,stderr=STDOUT) == 0:
-                print(f"ℹ️ {Fore.WHITE}{service} service is active")
+                print(f"❌ {Fore.WHITE}{service} service is active")
             else:
-                print(f"✅ {Fore.WHITE}{service} service is inactive")
+                print(f"ℹ️ {Fore.WHITE}{service} service is inactive")
                 service_is_active = False
             
             if service_is_active:
