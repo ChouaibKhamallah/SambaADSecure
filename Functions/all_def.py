@@ -187,7 +187,7 @@ class Host:
 
         if f'{user_choices["hostname"]}.{user_choices["domain_full_name"]}' != host_infos["hostname"]:
 
-            print(f'SET HOSTNAME {user_choices["hostname"]}.{user_choices["domain_full_name"]}')
+            print(f'✅ {Fore.WHITE}SET HOSTNAME {user_choices["hostname"]}.{user_choices["domain_full_name"]}')
 
             while True:
                 user_input = input(f"{Fore.CYAN}Do you want to confirm to rename server from {host_infos['hostname']} to {user_choices['hostname']}.{user_choices['domain_full_name']} ? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
@@ -220,9 +220,9 @@ class System:
                 readable_hash = hashlib.sha256(bytes).hexdigest()
 
             if readable_hash == sha256:
-                print(f'✔️ - HASH OK for file {destination} : {readable_hash}')
+                print(f'✅ {Fore.WHITE}HASH OK for file {destination} : {readable_hash}')
             else:
-                print(f'HASH NOT OK for file {destination}')
+                print(f'❌ {Fore.WHITE}HASH NOT OK for file {destination}')
 
     def add_samba_repository(SambaADRequirements,host_infos):
 
