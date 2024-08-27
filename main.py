@@ -18,6 +18,7 @@ def launch_script_process():
         System.disable_ipv6()
       System.set_hostname(host_infos,ScriptSettings)
       System.add_samba_repository(SambaADRequirements,host_infos)
+      System.install_packages(SambaADRequirements["system_packages"])
   
   if join_domain:
     pass

@@ -285,18 +285,18 @@ class System:
 
             try:
                 run(['apt','update'])
-                print(f'✅ {Fore.WHITE}LAUNCH UPDATE PACKAGES')
+                print(f'✅ {Fore.WHITE}UPDATE PACKAGES')
             except Exception as e:
                 print(e)
                 print(f'❌ {Fore.WHITE}FAILED TO RUN UPDATE PACKAGES')
 
 
-    def install_packages(SambaADRequirements):
+    def install_packages(packages):
 
         cache = apt.Cache()
         cache.open()
 
-        for package in SambaADRequirements["system_packages"]:
+        for package in packages:
             response = "%s Package Installed."
             try:
                 cache[package].is_installed
