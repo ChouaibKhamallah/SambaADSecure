@@ -373,6 +373,10 @@ dns_lookup_realm = false
         print(f'✅ {Fore.WHITE} file "/etc/samba/smb.conf" deleted')
         
         if user_choices["domain_functional_level"] == "0":
-            call(["samba-tool","domain","provision",f'--realm={user_choices["domain_full_name"].upper()}',"--domain",user_choices["domain_netbios_name"].upper(),"--server-role=dc",'--option="ad dc functional level = 2016"',"--function-level=2016"])
+            command = f'samba-tool domain provision --realm={user_choices["domain_full_name"].upper()} --domain {user_choices["domain_netbios_name"].upper()} --server-role=dc --option="ad dc functional level = 2016" --function-level=2016'
+            call(command,shell=True)
         else:
-            call(["samba-tool","domain","provision",f'--realm={user_choices["domain_full_name"].upper()}',"--domain",user_choices["domain_netbios_name"].upper(),"--server-role=dc"])
+            command = f'samba-tool domain provision --realm={user_choices["domain_full_name"].upper()} --domain {user_choices["domain_netbios_name"].upper()} --server-role=dc'
+            call(command,shell=True)
+        
+        print(f'✅ {Fore.WHITE} SAMBA-AD DOMAIN PROVISION')
