@@ -296,7 +296,7 @@ class System:
         cache = apt.Cache()
         cache.open()
 
-        print(f"\nℹ️ {Fore.WHITE} DOWNLOAD PACKAGES")
+        print(f"\nℹ️ {Fore.WHITE} INSTALL PACKAGES")
 
         for package in packages:
             if cache[package].is_installed:
@@ -308,11 +308,29 @@ class System:
     
     def disable_service(services):
 
+        print(f"\nℹ️ {Fore.WHITE} DISABLE SERVICES")
+
         for service in services:
+            service_is_active = True
             if call(["systemctl","is-active","--quiet",service],stdout=DEVNULL,stderr=STDOUT) == 0:
-                print(f"✅ {Fore.WHITE}{service} service is active")
+                print(f"ℹ️ {Fore.WHITE}{service} service is active")
             else:
-                print(f"❌ {Fore.WHITE}{service} service is inactive")
+                print(f"ℹ️ {Fore.WHITE}{service} service is inactive")
+                service_is_active = False
+            
+            if service_is_active:
+                try:
+                    call(["systemctl","stop",service],stdout=DEVNULL,stderr=STDOUT)
+                    print(f'✅ {Fore.WHITE}{service} service stopped')
+                except Exception as e:
+                    print(f'✅ {Fore.WHITE}{service} unable to stop service')
+
+                try:
+                    call(["systemctl","disable",service],stdout=DEVNULL,stderr=STDOUT)
+                    print(f'✅ {Fore.WHITE}{service} service disabled')
+                except Exception as e:
+                    print(f'✅ {Fore.WHITE}{service} unable to disable service')
+
 
 
 

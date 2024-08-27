@@ -42,8 +42,8 @@
             "ldb-tools",
             "python3-cryptography"],
         "services_to_disable_before_install":
-            ["avahi-daemon",
-            "ssh"],        
+            ["avahi-daemon.service",
+            "avahi-daemon.socket"],        
         "services_to_disable_after_install":
             ["samba",
             "winbind",
