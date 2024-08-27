@@ -187,11 +187,11 @@ class System:
                     data.remove(line)
 
         for config in ipv6_configuration:
-            data.append(f"{config}={ipv6_configuration[config]}")
+            data.append(f"{config}={ipv6_configuration[config]}\n")
 
         with open(configuration_file,"w") as config_file:
             config_file.writelines(data)
-            
+
     def set_hostname(host_infos,ScriptSettings):
 
         print(f"\n{Fore.GREEN}{ScriptSettings['choices_details']['hostname']['description']}")
