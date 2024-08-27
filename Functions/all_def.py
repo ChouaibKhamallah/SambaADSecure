@@ -175,7 +175,12 @@ class System:
                                 "net.ipv6.conf.tun0.disable_ipv6":"1"
                             }
         
-        configuration_file = "/etc/sysctl.conf"
+        for config in ipv6_configuration:
+            command = f"{config}={ipv6_configuration[config]}"
+            if not dryrun:
+                run(command)
+        
+        """configuration_file = "/etc/sysctl.conf"
 
         if os.path.isfile(configuration_file):
             with open(configuration_file, "r") as config:
@@ -190,7 +195,7 @@ class System:
             data.append(f"{config}={ipv6_configuration[config]}\n")
 
         with open(configuration_file,"w") as config_file:
-            config_file.writelines(data)
+            config_file.writelines(data)"""
 
     def set_hostname(host_infos,ScriptSettings):
 
