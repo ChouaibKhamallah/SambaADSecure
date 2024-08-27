@@ -14,6 +14,8 @@ def launch_script_process():
 
     if user_choices['create_domain']:
       System.interface_configuration(host_infos)
+      if user_choices["disable_ipv6"]:
+        System.disable_ipv6()
       System.set_hostname(host_infos,ScriptSettings)
       System.add_samba_repository(SambaADRequirements,host_infos)
   

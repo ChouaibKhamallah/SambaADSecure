@@ -168,8 +168,30 @@ class System:
                 print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
 
     def disable_ipv6():
-        pass
 
+        ipv6_configuration = {  "net.ipv6.conf.all.disable_ipv6":"1",
+                                "net.ipv6.conf.default.disable_ipv6":"1",
+                                "net.ipv6.conf.lo.disable_ipv6":"1",
+                                "net.ipv6.conf.tun0.disable_ipv6":"1"
+                            }
+        
+        configuration_file = "/etc/sysctl.conf"
+
+        if os.path.isfile(configuration_file):
+            with open(configuration_file, "r") as config:
+                data = config.readlines()
+        
+        for config in ipv6_configuration:
+            for line in data:
+                if config in line:
+                    data.remove(line)
+
+        for config in ipv6_configuration:
+            data.append(f"{config}={ipv6_configuration[config]}")
+
+        with open(configuration_file,"w") as config_file:
+            config_file.writelines(data)
+            
     def set_hostname(host_infos,ScriptSettings):
 
         print(f"\n{Fore.GREEN}{ScriptSettings['choices_details']['hostname']['description']}")
