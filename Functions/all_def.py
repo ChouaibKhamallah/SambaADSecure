@@ -65,7 +65,7 @@ class Messages:
 
                 elif type(ScriptSettings["Questions"][section]["question"][question]) is dict:
 
-                    print(f'{Fore.WHITE}{question}')
+                    print(f'ℹ️ {Fore.WHITE} {question}')
 
                     for option in ScriptSettings["Questions"][section]["question"][question]:
                         print(f'{Fore.CYAN}{option} {Fore.YELLOW}{ScriptSettings["Questions"][section]["question"][question][option]}')
