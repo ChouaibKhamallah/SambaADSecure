@@ -18,6 +18,7 @@ def launch_script_process():
         System.disable_ipv6()
       System.set_hostname(host_infos,ScriptSettings)
       System.add_samba_repository(SambaADRequirements,host_infos)
+      System.disable_service(SambaADRequirements[host_infos['distribution']]["services_to_disable_before_install"])
       System.install_packages(SambaADRequirements[host_infos['distribution']]["system_packages"])
   
   if join_domain:

@@ -284,7 +284,7 @@ class System:
                 print(f'❌ {Fore.WHITE}REPOSITORY NOT EXISTS {repository_file}')
 
             try:
-                run(['apt','update'])
+                call(['apt','update'],stdout=DEVNULL,stderr=STDOUT)
                 print(f'✅ {Fore.WHITE}UPDATE PACKAGES')
             except Exception as e:
                 print(e)
@@ -300,10 +300,22 @@ class System:
 
         for package in packages:
             if cache[package].is_installed:
-              print(f'ℹ️  {Fore.WHITE}{package} Already installed')
+              print(f'ℹ️  {Fore.WHITE}{package} already installed')
             else:
-                call(["apt","install","-y",package],stdout=DEVNULL,stderr=STDOUT)
-                print(f'✅ {Fore.WHITE}{package} installed')
+                if not dryrun:
+                    call(["apt","install","-y",package],stdout=DEVNULL,stderr=STDOUT)
+                print(f'✅ {Fore.WHITE}{package} freshly installed')
+    
+    def disable_service(services):
+
+        for service in services:
+            if call(["systemctl","is-active","--quiet",service],stdout=DEVNULL,stderr=STDOUT) == 0:
+                print(f"✅ {Fore.WHITE}{service} service is active")
+            else:
+                print(f"❌ {Fore.WHITE}{service} service is inactive")
+
+
+
 
 
 
