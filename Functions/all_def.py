@@ -220,7 +220,7 @@ class System:
                 readable_hash = hashlib.sha256(bytes).hexdigest()
 
             if readable_hash == sha256:
-                print(f'HASH OK for file {destination} : {readable_hash}')
+                print(f'✔️ - HASH OK for file {destination} : {readable_hash}')
             else:
                 print(f'HASH NOT OK for file {destination}')
 
@@ -232,11 +232,10 @@ class System:
         gpg_key_file = SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"]
         gpg_key_sha256 = SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
 
+        print()
         if not dryrun:
-            System.download_file(  url=gpg_key_url,
-                            destination=gpg_key_file,
-                            sha256=gpg_key_sha256
-                        )
+
+            System.download_file(url=gpg_key_url,destination=gpg_key_file,sha256=gpg_key_sha256)
             
             with open(repository_file, "w") as repo:
                 repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}')

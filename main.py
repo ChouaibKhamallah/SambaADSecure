@@ -14,12 +14,14 @@ def launch_script_process():
     if dryrun:
       host_infos["distribution_codename"] = "bookworm"
       host_infos['distribution'] = "debian"
-      print(f"{SambaADRequirements[host_infos['distribution'].lower()]['repository'][host_infos['distribution_codename']]['url']}")
 
     if user_choices['create_domain']:
       Host.interface_configuration(host_infos)
       Host.set_hostname(host_infos,ScriptSettings)
       System.add_samba_repository(SambaADRequirements,host_infos)
+  
+  if join_domain:
+    pass
 
 if __name__ == "__main__":
 
