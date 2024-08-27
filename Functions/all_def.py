@@ -347,7 +347,7 @@ class System:
             if user_choices["sambaad_ip"] in line:
                 data.remove(line)
         
-        data.append(f"{user_choices["sambaad_ip"]} {user_choices["hostname"]}.{user_choices["domain_full_name"]}   {user_choices["hostname"]}\n")
+        data.append(f'{user_choices["sambaad_ip"]} {user_choices["hostname"]}.{user_choices["domain_full_name"]}   {user_choices["hostname"]}\n')
 
         with open("/etc/hosts","w") as hosts_file:
             hosts_file.writelines(data)
