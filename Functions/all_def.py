@@ -176,9 +176,19 @@ class System:
                             }
         
         for config in ipv6_configuration:
-            command = f"{config}={ipv6_configuration[config]}"
+            command = f"sysctl -w {config}={ipv6_configuration[config]}"
             if not dryrun:
-                run(command)
+                try:
+                    run(command)
+                    print(f'✅ {Fore.WHITE}SYSCTL SET {config} to value {ipv6_configuration[config]}')
+                except:
+                    print(f'❌ {Fore.WHITE}SYSCTL Failed to set {config} to value {ipv6_configuration[config]}')
+
+                try:
+                    run('sysctl --system')
+                    print(f'✅ {Fore.WHITE}SYSCTL FORCE RELOAD CONFIGURATION')
+                except:
+                    print(f'❌ {Fore.WHITE}SYSCTL FAILED TO FORCE RELOAD CONFIGURATION')
         
         """configuration_file = "/etc/sysctl.conf"
 
