@@ -5,7 +5,7 @@ import argparse
 import re
 import sys
 import os
-from subprocess import check_output,run,Popen
+from subprocess import check_output,run,call,DEVNULL,STDOUT
 import netifaces
 import requests
 import hashlib
@@ -297,11 +297,11 @@ class System:
         cache.open()
 
         for package in packages:
-            response = "%s Package Installed."
-            try:
-                cache[package].is_installed
-            except KeyError:
-                response = "%s - Package Not Installed."
+            if cache[package].is_installed:
+              print(f'ℹ️  {Fore.WHITE}{package} Already installed')
+            else:
+                call(["apt","install","-y",package],stdout=DEVNULL,stderr=STDOUT)
+                print(f'✅ {Fore.WHITE}{package} installed')
 
-            print(response % package)
+
 
