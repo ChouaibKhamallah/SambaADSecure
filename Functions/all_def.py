@@ -209,7 +209,7 @@ class System:
         if response.status_code == 200:
             with open(file_Path, 'wb') as file:
                 file.write(response.content)
-            print(f'✅ {Fore.WHITE}File {destination} downloaded successfully')
+            print(f'✅ {Fore.WHITE}FILE DOWNLOADED {url}, destination : {destination}')
         else:
             print(f'❌ {Fore.WHITE}Failed to download {url}')
 
@@ -231,11 +231,12 @@ class System:
         gpg_key_file = SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"]
         gpg_key_sha256 = SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
 
-        print()
         if not dryrun:
-
+            
+            print(f"ℹ️ {Fore.WHITE}DOWNLOAD REPOSITORY KEY")
             System.download_file(url=gpg_key_url,destination=gpg_key_file,sha256=gpg_key_sha256)
             
+            print(f"ℹ️ {Fore.WHITE}ADD SAMBA REPOSITORY")
             with open(repository_file, "w") as repo:
                 repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}')
-            print(f'✅ {Fore.WHITE}ADD REPOSITORY OK, destination : {repository_file}')
+            print(f'✅ {Fore.WHITE}ADD REPOSITORY {repository_url}, destination : {repository_file}')
