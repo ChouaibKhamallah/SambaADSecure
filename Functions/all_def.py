@@ -150,8 +150,8 @@ class Host:
 
             user_input = input(f"{Fore.CYAN}Do you confirm? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
             if user_input.lower() in ["yes", "y"]:
-                print(f'✅ {Fore.WHITE}Selected IP: {user_choices["sambaad_ip"]}')
-                print(f'✅ {Fore.WHITE}Interface: {user_choices["sambaad_interface"]}')
+                print(f'✅ {Fore.WHITE}SELECTED IP: {user_choices["sambaad_ip"]}')
+                print(f'✅ {Fore.WHITE}INTERFACE: {user_choices["sambaad_interface"]}')
                 break
             elif user_input.lower() in ["no", "n"]:
                 continue
