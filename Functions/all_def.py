@@ -176,7 +176,7 @@ class System:
                             }
         
         for config in ipv6_configuration:
-            command = f"sysctl -w {config}={ipv6_configuration[config]}"
+            command = f"{config}={ipv6_configuration[config]}"
             if not dryrun:
                 try:
                     run(command,shell=True)
