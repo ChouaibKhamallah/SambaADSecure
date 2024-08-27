@@ -6,17 +6,16 @@ import re
 import sys
 import os
 from subprocess import check_output,run,call,DEVNULL,STDOUT
-import netifaces
-import requests
+import netifaces # type: ignore
+import requests # type: ignore
 import hashlib
-import apt
+import apt # type: ignore
 
 script_directory = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 global ScriptSettings
 global SambaADRequirements
 global args
-
 
 with open(f'{script_directory}/Configuration/ScriptSettings.json') as json_file:
   ScriptSettings = json.load(json_file)
@@ -270,11 +269,11 @@ class System:
 
     def add_samba_repository(SambaADRequirements,host_infos):
 
-        repository_url = SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["url"]
+        repository_url  = SambaADRequirements[host_infos["distribution"]]["repository"][host_infos["distribution_codename"]]["url"]
         repository_file = gpg_key_url = SambaADRequirements[host_infos["distribution"]]["repository"]["file"]
-        gpg_key_url = SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key"]
-        gpg_key_file = SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"]
-        gpg_key_sha256 = SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
+        gpg_key_url     = SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key"]
+        gpg_key_file    = SambaADRequirements[host_infos["distribution"]]["repository"]["gpg_key_dest"]
+        gpg_key_sha256  = SambaADRequirements[host_infos["distribution"]]["repository"]["sha256"]
 
         if not dryrun:
             
