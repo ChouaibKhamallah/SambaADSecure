@@ -282,3 +282,26 @@ class System:
                     print(f'❌ {Fore.WHITE}ERROR IN REPOSITORY {repository_file}')
             else:
                 print(f'❌ {Fore.WHITE}REPOSITORY NOT EXISTS {repository_file}')
+
+            try:
+                run(['apt','update'])
+                print(f'✅ {Fore.WHITE}LAUNCH UPDATE PACKAGES')
+            except Exception as e:
+                print(e)
+                print(f'❌ {Fore.WHITE}FAILED TO RUN UPDATE PACKAGES')
+
+
+    def install_packages(SambaADRequirements):
+
+        cache = apt.Cache()
+        cache.open()
+
+        for package in SambaADRequirements["system_packages"]:
+            response = "%s Package Installed."
+            try:
+                cache[package].is_installed
+            except KeyError:
+                response = "%s - Package Not Installed."
+
+            print(response % package)
+
