@@ -5,15 +5,12 @@ from Functions.all_def import *
 
 def launch_script_process():
 
+  Messages.start_script_message(ScriptSettings)
+
   if create_domain:
-    Messages.start_script_message(ScriptSettings)
     user_choices = Messages.get_user_choices(ScriptSettings)
 
     host_infos = System.get_host_infos()
-
-    if dryrun:
-      host_infos["distribution_codename"] = "bookworm"
-      host_infos['distribution'] = "debian"
 
     if user_choices['create_domain']:
       System.interface_configuration(host_infos)

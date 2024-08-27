@@ -23,11 +23,11 @@ with open(f'{script_directory}/Configuration/ScriptSettings.json') as json_file:
 with open(f'{script_directory}/Configuration/SambaADRequirements.json') as json_file:
   SambaADRequirements = json.load(json_file)
 
-parser = argparse.ArgumentParser(description=ScriptSettings["Messages"]["Welcome"])
-parser.add_argument('--dryrun', action=argparse.BooleanOptionalAction,dest='dryrun',help='print your choices but does not actually perform the actions',default=False)
-parser.add_argument('--create-domain', action=argparse.BooleanOptionalAction,dest='create',help='install OS prerequites and create new Active Directory domain',default=False)
-parser.add_argument('--join-domain', action=argparse.BooleanOptionalAction,dest='join',help='add a Samba AD server to existing Active Directory domain',default=False)
-parser.add_argument('--debug', action=argparse.BooleanOptionalAction,dest='debug',help='add more infos',default=False)
+parser = argparse.ArgumentParser()
+parser.add_argument('--dryrun', action="store_true",dest='dryrun',help='print your choices but does not actually perform the actions',default=False)
+parser.add_argument('--create-domain', action="store_true",dest='create',help='install OS prerequites and create new Active Directory domain',default=False)
+parser.add_argument('--join-domain', action="store_true",dest='join',help='add a Samba AD server to existing Active Directory domain',default=False)
+parser.add_argument('--debug', action="store_true",dest='debug',help='add more infos',default=False)
 
 args = parser.parse_args()
 dryrun = args.dryrun
@@ -37,11 +37,9 @@ debug = args.debug
 
 class Messages:
 
-    def question_yes_no():
-        pass
-
     def start_script_message(ScriptSettings):
-        print(f'{Fore.WHITE}{ScriptSettings["Messages"]["Welcome"]}')
+        print(f'{ScriptSettings["Messages"]["Welcome"]}')
+        print(f'{Fore.WHITE}{parser.print_help()}\n')
 
     def get_user_choices(ScriptSettings):
         global user_choices 
