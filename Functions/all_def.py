@@ -121,7 +121,7 @@ class Host:
 
             if len(host_infos["ip_addresses"]) > 0:
 
-                print(f'{Fore.WHITE}Multiple ips detected, please select an interface to deploy Samba-AD\n')
+                print(f'ℹ️ {Fore.WHITE}IP(s) detected, please select an interface to deploy Samba-AD\n')
 
                 for ip in host_infos["ip_addresses"]:
                     print(f'{Fore.CYAN}{host_infos["ip_addresses"].index(ip)} {Fore.YELLOW}{ip}')
@@ -150,6 +150,8 @@ class Host:
 
             user_input = input(f"{Fore.CYAN}Do you confirm? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
             if user_input.lower() in ["yes", "y"]:
+                print(f'✅ {Fore.WHITE}Selected IP: {user_choices["sambaad_ip"]}')
+                print(f'✅ {Fore.WHITE}Interface: {user_choices["sambaad_interface"]}')
                 break
             elif user_input.lower() in ["no", "n"]:
                 continue
@@ -246,7 +248,7 @@ class System:
                     repo_line = repo.readline()
 
                 if repo_line == repository:
-                    print(f'✅ {Fore.WHITE}ADDED REPOSITORY {repository_url} in {repository_file}')
+                    print(f'✅ {Fore.WHITE}ADDED REPOSITORY "{repository_url}" in {repository_file}')
                 else:
                     print(f'❌ {Fore.WHITE}ERROR IN REPOSITORY {repository_file}')
             else:
