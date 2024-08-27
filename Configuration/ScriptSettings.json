@@ -41,7 +41,7 @@
             {   "description": "Enter a server hostname that not contains a dot. example: SRVADS1",
                 "question":
                         {"What is the server hostname ?":["SRVADS1"]},
-                "regex": "^[A-Za-z0-9]{1,15}$"
+                "regex": "^[A-Za-z0-9][A-Za-z0-9-]{0,14}$"
             }
         },
 
