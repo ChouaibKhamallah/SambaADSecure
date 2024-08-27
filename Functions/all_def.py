@@ -5,7 +5,7 @@ import argparse
 import re
 import sys
 import os
-from subprocess import check_output,run
+from subprocess import check_output,run,Popen
 import netifaces
 import requests
 import hashlib
@@ -170,16 +170,15 @@ class System:
     def disable_ipv6():
 
         ipv6_configuration = {  "net.ipv6.conf.all.disable_ipv6":"1",
-                                "net.ipv6.conf.default.disable_ipv6":"1",
-                                "net.ipv6.conf.lo.disable_ipv6":"1",
-                                "net.ipv6.conf.tun0.disable_ipv6":"1"
+                                "net.ipv6.conf.default.disable_ipv6":"1"
                             }
         
         for config in ipv6_configuration:
             command = f"{config}={ipv6_configuration[config]}"
+            print(command)
             if not dryrun:
                 try:
-                    run("sysctl","-w",command)
+                    Popen(["sysctl","-w",command])
                     print(f'✅ {Fore.WHITE}SYSCTL SET {config} to value {ipv6_configuration[config]}')
                 except Exception as e:
                     print(e)
@@ -187,7 +186,7 @@ class System:
 
         if not dryrun:
             try:
-                run('sysctl','-p')
+                Popen(['sysctl','-p'])
                 print(f'✅ {Fore.WHITE}SYSCTL FORCE RELOAD CONFIGURATION')
             except Exception as e:
                 print(e)
