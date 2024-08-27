@@ -209,9 +209,9 @@ class System:
         if response.status_code == 200:
             with open(file_Path, 'wb') as file:
                 file.write(response.content)
-            print(f'File {destination} downloaded successfully')
+            print(f'✅ {Fore.WHITE}File {destination} downloaded successfully')
         else:
-            print('Failed to download {url}')
+            print(f'❌ {Fore.WHITE}Failed to download {url}')
 
         if sha256 is not None:
             with open(destination, "rb") as f:
@@ -238,3 +238,4 @@ class System:
             
             with open(repository_file, "w") as repo:
                 repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}')
+            print(f'✅ {Fore.WHITE}ADD REPOSITORY OK, destination : {repository_file}')
