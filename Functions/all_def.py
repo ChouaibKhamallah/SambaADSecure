@@ -159,7 +159,7 @@ class Host:
                 print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
 
         while True:
-            user_input = input(f"{Fore.CYAN}Do you want to disable ipv6? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
+            user_input = input(f"\n{Fore.CYAN}Do you want to disable ipv6? {Fore.WHITE}['yes','no']: {Fore.GREEN}")
             if user_input.lower() in ["yes", "y"]:
                 user_choices["disable_ipv6"] = True
                 break
