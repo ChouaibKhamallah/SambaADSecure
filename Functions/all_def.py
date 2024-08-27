@@ -101,7 +101,7 @@ class Messages:
         
         return user_choices
 
-class Host:
+class System:
 
     def get_host_infos():
 
@@ -200,8 +200,6 @@ class Host:
                     break
                 else:
                     print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
-
-class System:
 
     def download_file(url=None,destination=None,sha256=None):
 

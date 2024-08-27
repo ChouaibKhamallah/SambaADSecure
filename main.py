@@ -9,15 +9,15 @@ def launch_script_process():
     Messages.start_script_message(ScriptSettings)
     user_choices = Messages.get_user_choices(ScriptSettings)
 
-    host_infos = Host.get_host_infos()
+    host_infos = System.get_host_infos()
 
     if dryrun:
       host_infos["distribution_codename"] = "bookworm"
       host_infos['distribution'] = "debian"
 
     if user_choices['create_domain']:
-      Host.interface_configuration(host_infos)
-      Host.set_hostname(host_infos,ScriptSettings)
+      System.interface_configuration(host_infos)
+      System.set_hostname(host_infos,ScriptSettings)
       System.add_samba_repository(SambaADRequirements,host_infos)
   
   if join_domain:
