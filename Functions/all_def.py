@@ -9,6 +9,7 @@ from subprocess import check_output,run,Popen
 import netifaces
 import requests
 import hashlib
+import apt
 
 script_directory = os.path.dirname(os.path.abspath(sys.argv[0]))
 

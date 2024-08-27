@@ -41,14 +41,14 @@
             "smbclient",
             "ldb-tools",
             "python3-cryptography"],
-        "services_to_disable":
-            ["avahi-daemon.service",
-            "avahi-daemon.socket",
-            "samba",
+        "services_to_disable_before_install":
+            ["avahi-daemon"],        
+        "services_to_disable_after_install":
+            ["samba",
             "winbind",
             "nmbd",
             "smbd"],
-        "services_to_enable":
+        "services_to_enable_after_install":
             ["samba-ad-dc"]
         }
 }
