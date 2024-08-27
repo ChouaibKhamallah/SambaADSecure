@@ -354,6 +354,8 @@ class System:
     
     def configure_krb5_file():
 
+        print(f"\nℹ️ {Fore.WHITE} KRB5.CONF CONFIGURATION")
+
         krb5_datas = """[libdefaults]
 default_realm = %s
 dns_lookup_kdc = true
