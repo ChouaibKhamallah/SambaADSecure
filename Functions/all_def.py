@@ -119,7 +119,7 @@ class System:
 
             if len(host_infos["ip_addresses"]) > 0:
 
-                print(f'ℹ️ {Fore.WHITE}IP(s) detected, please select an interface to deploy Samba-AD\n')
+                print(f'ℹ️ {Fore.WHITE} IP(s) detected, please select an interface to deploy Samba-AD\n')
 
                 for ip in host_infos["ip_addresses"]:
                     print(f'{Fore.CYAN}{host_infos["ip_addresses"].index(ip)} {Fore.YELLOW}{ip}')
