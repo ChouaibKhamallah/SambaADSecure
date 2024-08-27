@@ -334,9 +334,9 @@ class System:
     def install_samba_ad(packages):
 
         print(f"\nℹ️ {Fore.WHITE} SAMBA-AD PACKAGES INSTALLATION")
-        call(["export","DEBIAN_FRONTEND=noninteractive"],stdout=DEVNULL,stderr=STDOUT)
+        run(["export","DEBIAN_FRONTEND=noninteractive"])
         System.install_packages(packages)
-        call(["unset","DEBIAN_FRONTEND"],stdout=DEVNULL,stderr=STDOUT)
+        run(["unset","DEBIAN_FRONTEND"])
 
 
 
