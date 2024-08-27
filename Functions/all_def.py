@@ -372,4 +372,7 @@ dns_lookup_realm = false
         call(["rm","-rf","/etc/samba/smb.conf"],stdout=DEVNULL,stderr=STDOUT)
         print(f'✅ {Fore.WHITE} file "/etc/samba/smb.conf" deleted')
         
-        call(["samba-tool","domain","provision",f'--realm={user_choices["domain_full_name"].upper()}',"--domain",user_choices["domain_netbios_name"].upper(),"--server-role=dc"])
+        if user_choices["domain_functional_level"] == "0":
+            call(["samba-tool","domain","provision",f'--realm={user_choices["domain_full_name"].upper()}',"--domain",user_choices["domain_netbios_name"].upper(),"--server-role=dc",'--option="ad dc functional level = 2016"',"--function-level=2016"])
+        else:
+            call(["samba-tool","domain","provision",f'--realm={user_choices["domain_full_name"].upper()}',"--domain",user_choices["domain_netbios_name"].upper(),"--server-role=dc"])
