@@ -344,7 +344,33 @@ class System:
                 print(f'✅ {Fore.WHITE}{service} service disabled')
             except Exception as e:
                 print(f'❌ {Fore.WHITE}{service} unable to disable service')
+
+    def enable_services(services):
+
+        print(f"\nℹ️ {Fore.WHITE} ENABLE SERVICES")
+
+        for service in services:
+            service_is_active = True
+            if call(["systemctl","is-active","--quiet",service],stdout=DEVNULL,stderr=STDOUT) == 0:
+                print(f"ℹ️ {Fore.WHITE}{service} service is active")
+            else:
+                print(f"❌ {Fore.WHITE}{service} service is inactive")
+                service_is_active = False
+            
+            if not service_is_active:
+                try:
+                    call(["systemctl","unmask",service],stdout=DEVNULL,stderr=STDOUT)
+                    print(f'✅ {Fore.WHITE}{service} service unmasked')
+                except Exception as e:
+                    print(f'❌ {Fore.WHITE}{service} unable to unmask service')
+
+            try:
+                call(["systemctl","enable",service],stdout=DEVNULL,stderr=STDOUT)
+                print(f'✅ {Fore.WHITE}{service} service enabled')
+            except Exception as e:
+                print(f'❌ {Fore.WHITE}{service} unable to enable service')
     
+
     def install_samba_ad(packages):
 
         print(f"\nℹ️ {Fore.WHITE} SAMBA-AD PACKAGES INSTALLATION")
@@ -364,7 +390,17 @@ dns_lookup_realm = false
         
         with open("/etc/krb5.conf", "w") as krb5_file:
             krb5_file.write(krb5_datas)
+        
+    def configure_resolv_conf_file(user_choices):
 
+        print(f"\nℹ️ {Fore.WHITE} RESOLVS.CONF CONFIGURATION")
+
+        krb5_datas = """search %s
+nameserver 127.0.0.1
+""" % (user_choices["domain_full_name"])
+        
+        with open("/etc/resolv.conf", "w") as resolv_file:
+            resolv_file.write(krb5_datas)
 
     def samba_ad_provision(user_choices):
         print(f"\nℹ️ {Fore.WHITE} SAMBA-AD PROVISION")
@@ -380,3 +416,9 @@ dns_lookup_realm = false
             call(command,shell=True)
         
         print(f'✅ {Fore.WHITE} SAMBA-AD DOMAIN PROVISION')
+
+        call(["rm","-rf","/var/lib/samba/private/krb5.conf"],stdout=DEVNULL,stderr=STDOUT)
+        print(f'✅ {Fore.WHITE} file "/var/lib/samba/private/krb5.conf" deleted')
+
+        call(["ln","-s","/etc/krb5.conf","/var/lib/samba/private/krb5.conf"],stdout=DEVNULL,stderr=STDOUT)
+        print(f'✅ {Fore.WHITE} file "/var/lib/samba/private/krb5.conf" linked to "/etc/krb5.conf"')
