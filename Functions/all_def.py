@@ -303,7 +303,7 @@ class System:
               print(f'ℹ️  {Fore.WHITE}{package} already installed')
             else:
                 if not dryrun:
-                    call(["apt","install","-y",package],stdout=DEVNULL,stderr=STDOUT)
+                    call(["DEBIAN_FRONTEND=noninteractive","apt","install","-y",package],stdout=DEVNULL,stderr=STDOUT)
                 print(f'✅ {Fore.WHITE}{package} freshly installed')
     
     def disable_services(services):
