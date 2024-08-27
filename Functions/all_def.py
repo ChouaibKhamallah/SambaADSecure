@@ -237,6 +237,18 @@ class System:
             System.download_file(url=gpg_key_url,destination=gpg_key_file,sha256=gpg_key_sha256)
             
             print(f"\nℹ️ {Fore.WHITE} ADD SAMBA REPOSITORY")
+            repository = f'deb [signed-by={gpg_key_file}] {repository_url}'
             with open(repository_file, "w") as repo:
-                repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}')
-            print(f'✅ {Fore.WHITE}ADD REPOSITORY {repository_url} in {repository_file}')
+                repo.write(repository)
+
+            if os.path.isfile(repository_file):
+                with open(repository_file,"r") as repo:
+                    repo_line = repo.readline()
+
+                if repo_line == repository:
+                    print(f'✅ {Fore.WHITE}ADDED REPOSITORY {repository_url} in {repository_file}')
+                else:
+                    print(f'❌ {Fore.WHITE}ERROR IN REPOSITORY {repository_file}')
+            else:
+                print(f'❌ {Fore.WHITE}REPOSITORY NOT EXISTS {repository_file}')
+
