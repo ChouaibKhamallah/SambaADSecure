@@ -21,7 +21,7 @@ def launch_script_process():
 
       System.set_hostname(host_infos,ScriptSettings)
       System.add_samba_repository(SambaADRequirements,host_infos)
-      System.configure_hosts_file(host_infos)
+      System.configure_hosts_file(user_choices)
       System.disable_services(SambaADRequirements[host_infos['distribution']]["services_to_disable_before_install"])
       System.install_packages(SambaADRequirements[host_infos['distribution']]["system_packages"])
       System.install_packages(SambaADRequirements[host_infos['distribution']]["samba_packages"])
