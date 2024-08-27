@@ -26,6 +26,7 @@ def launch_script_process():
       System.install_packages(SambaADRequirements[host_infos['distribution']]["system_packages"])
       System.install_packages(SambaADRequirements[host_infos['distribution']]["samba_packages"])
       System.disable_services(SambaADRequirements[host_infos['distribution']]["services_to_disable_after_install"])
+      System.configure_krb5_file(user_choices)
   
   if join_domain:
     pass

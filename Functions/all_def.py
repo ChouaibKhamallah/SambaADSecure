@@ -352,7 +352,7 @@ class System:
         System.install_packages(packages)
         run(["unset","DEBIAN_FRONTEND"])
     
-    def configure_krb5_file():
+    def configure_krb5_file(user_choices):
 
         print(f"\nℹ️ {Fore.WHITE} KRB5.CONF CONFIGURATION")
 
@@ -361,6 +361,8 @@ default_realm = %s
 dns_lookup_kdc = true
 dns_lookup_realm = false
 """ % (user_choices["domain_full_name"].upper())
+        
+        print(krb5_datas)
         
         with open("/etc/krb5.conf", "w") as krb5_file:
             krb5_file.write(krb5_datas)
