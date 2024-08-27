@@ -233,10 +233,10 @@ class System:
 
         if not dryrun:
             
-            print(f"ℹ️ {Fore.WHITE}DOWNLOAD REPOSITORY KEY")
+            print(f"\nℹ️ {Fore.WHITE}DOWNLOAD REPOSITORY KEY")
             System.download_file(url=gpg_key_url,destination=gpg_key_file,sha256=gpg_key_sha256)
             
-            print(f"ℹ️ {Fore.WHITE}ADD SAMBA REPOSITORY")
+            print(f"\nℹ️ {Fore.WHITE}ADD SAMBA REPOSITORY")
             with open(repository_file, "w") as repo:
                 repo.write(f'deb [signed-by={gpg_key_file}] {repository_url}')
             print(f'✅ {Fore.WHITE}ADD REPOSITORY {repository_url}, destination : {repository_file}')
