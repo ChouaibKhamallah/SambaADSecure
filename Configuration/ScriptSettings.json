@@ -30,8 +30,8 @@
             "domain_functional_level":
                 {"question":
                 {"The following Functional Level are available to you:":{
-                    "0":"Windows 2008",
-                    "1":"Windows 2016"}},
+                    "0":"Windows 2016",
+                    "1":"Windows 2008"}},
                 "regex":"no"}
         },
     
@@ -47,6 +47,6 @@
 
     "DomainFunctionalLevel":
         {
-            "0":"Windows 2008",
-            "1":"Windows 2016"}
+            "0":"Windows 2016",
+            "1":"Windows 2008"}
 }

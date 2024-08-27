@@ -95,6 +95,10 @@ class Messages:
                             print(f'{Fore.WHITE}{Back.RED}Invalid input, Please enter valid data{Style.RESET_ALL}')
 
             print(f"{Style.RESET_ALL}")
+
+            if type(user_input) is str:
+                user_input = user_input.lower()
+
             user_choices[section] = user_input
         
         return user_choices
@@ -277,4 +281,3 @@ class System:
                     print(f'❌ {Fore.WHITE}ERROR IN REPOSITORY {repository_file}')
             else:
                 print(f'❌ {Fore.WHITE}REPOSITORY NOT EXISTS {repository_file}')
-
