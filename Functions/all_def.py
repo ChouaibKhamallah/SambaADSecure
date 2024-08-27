@@ -306,7 +306,7 @@ class System:
                     call(["apt","install","-y",package],stdout=DEVNULL,stderr=STDOUT)
                 print(f'✅ {Fore.WHITE}{package} freshly installed')
     
-    def disable_service(services):
+    def disable_services(services):
 
         print(f"\nℹ️ {Fore.WHITE} DISABLE SERVICES")
 
@@ -315,7 +315,7 @@ class System:
             if call(["systemctl","is-active","--quiet",service],stdout=DEVNULL,stderr=STDOUT) == 0:
                 print(f"ℹ️ {Fore.WHITE}{service} service is active")
             else:
-                print(f"ℹ️ {Fore.WHITE}{service} service is inactive")
+                print(f"✅ {Fore.WHITE}{service} service is inactive")
                 service_is_active = False
             
             if service_is_active:
@@ -323,17 +323,20 @@ class System:
                     call(["systemctl","stop",service],stdout=DEVNULL,stderr=STDOUT)
                     print(f'✅ {Fore.WHITE}{service} service stopped')
                 except Exception as e:
-                    print(f'✅ {Fore.WHITE}{service} unable to stop service')
+                    print(f'❌ {Fore.WHITE}{service} unable to stop service')
 
                 try:
                     call(["systemctl","disable",service],stdout=DEVNULL,stderr=STDOUT)
                     print(f'✅ {Fore.WHITE}{service} service disabled')
                 except Exception as e:
-                    print(f'✅ {Fore.WHITE}{service} unable to disable service')
+                    print(f'❌ {Fore.WHITE}{service} unable to disable service')
+    
+    def install_samba_ad(packages):
 
-
-
-
+        print(f"\nℹ️ {Fore.WHITE} SAMBA-AD PACKAGES INSTALLATION")
+        call(["export","DEBIAN_FRONTEND=noninteractive"],stdout=DEVNULL,stderr=STDOUT)
+        System.install_packages(packages)
+        call(["unset","DEBIAN_FRONTEND"],stdout=DEVNULL,stderr=STDOUT)
 
 
 
