@@ -179,14 +179,14 @@ class System:
             command = f"sysctl -w {config}={ipv6_configuration[config]}"
             if not dryrun:
                 try:
-                    run(command)
+                    run(command.split(" "))
                     print(f'✅ {Fore.WHITE}SYSCTL SET {config} to value {ipv6_configuration[config]}')
                 except Exception as e:
                     print(e)
                     print(f'❌ {Fore.WHITE}SYSCTL Failed to set {config} to value {ipv6_configuration[config]}')
 
                 try:
-                    run('sysctl --system')
+                    run('sysctl','--system')
                     print(f'✅ {Fore.WHITE}SYSCTL FORCE RELOAD CONFIGURATION')
                 except Exception as e:
                     print(e)
