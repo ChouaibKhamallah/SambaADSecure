@@ -173,18 +173,6 @@ class System:
                                 "net.ipv6.conf.default.disable_ipv6":"1"
                             }
         
-        """for config in ipv6_configuration:
-            command = f"{config}={ipv6_configuration[config]}"
-            if not dryrun:
-                try:
-                    run(["sysctl","-w",command])
-                    print(f'✅ {Fore.WHITE}SYSCTL SET {config} to value {ipv6_configuration[config]}')
-                except Exception as e:
-                    print(e)
-                    print(f'❌ {Fore.WHITE}SYSCTL Failed to set {config} to value {ipv6_configuration[config]}')"""
-
-
-        
         configuration_file = "/etc/sysctl.conf"
 
         if os.path.isfile(configuration_file):
