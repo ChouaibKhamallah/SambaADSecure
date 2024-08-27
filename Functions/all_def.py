@@ -230,6 +230,22 @@ class System:
                 else:
                     print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
 
+    def configure_hosts_file(user_choices):
+
+        print(f"\nℹ️ {Fore.WHITE} /ETC/HOSTS CONFIGURATION")
+
+        with open("/etc/hosts","r") as hosts_file:
+            data = hosts_file.readlines()
+        
+        for line in data:
+            if user_choices["sambaad_ip"] in line:
+                data.remove(line)
+        
+        data.append(f'{user_choices["sambaad_ip"]} {user_choices["hostname"]}.{user_choices["domain_full_name"]}   {user_choices["hostname"]}\n')
+
+        with open("/etc/hosts","w") as hosts_file:
+            hosts_file.writelines(data)
+
     def download_file(url=None,destination=None,sha256=None):
 
         response = requests.get(url)
@@ -336,19 +352,20 @@ class System:
         System.install_packages(packages)
         run(["unset","DEBIAN_FRONTEND"])
     
-    def configure_hosts_file(user_choices):
+    def configure_krb5_file():
 
-        print(f"\nℹ️ {Fore.WHITE} /ETC/HOSTS CONFIGURATION")
-
-        with open("/etc/hosts","r") as hosts_file:
-            data = hosts_file.readlines()
+        krb5_datas = """[libdefaults]
+default_realm = %s
+dns_lookup_kdc = true
+dns_lookup_realm = false
+""" % (user_choices["domain_full_name"].upper())
         
-        for line in data:
-            if user_choices["sambaad_ip"] in line:
-                data.remove(line)
-        
-        data.append(f'{user_choices["sambaad_ip"]} {user_choices["hostname"]}.{user_choices["domain_full_name"]}   {user_choices["hostname"]}\n')
+        with open("/etc/krb5.conf", "w") as krb5_file:
+            krb5_file.write(krb5_datas)
 
-        with open("/etc/hosts","w") as hosts_file:
-            hosts_file.writelines(data)
+
+    def samba_ad_provision(user_choices):
+        pass
+    
+
 
