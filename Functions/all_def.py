@@ -173,7 +173,7 @@ class System:
                                 "net.ipv6.conf.default.disable_ipv6":"1"
                             }
         
-        for config in ipv6_configuration:
+        """for config in ipv6_configuration:
             command = f"{config}={ipv6_configuration[config]}"
             if not dryrun:
                 try:
@@ -181,17 +181,11 @@ class System:
                     print(f'✅ {Fore.WHITE}SYSCTL SET {config} to value {ipv6_configuration[config]}')
                 except Exception as e:
                     print(e)
-                    print(f'❌ {Fore.WHITE}SYSCTL Failed to set {config} to value {ipv6_configuration[config]}')
+                    print(f'❌ {Fore.WHITE}SYSCTL Failed to set {config} to value {ipv6_configuration[config]}')"""
 
-        if not dryrun:
-            try:
-                run(['sysctl','-p'])
-                print(f'✅ {Fore.WHITE}SYSCTL FORCE RELOAD CONFIGURATION')
-            except Exception as e:
-                print(e)
-                print(f'❌ {Fore.WHITE}SYSCTL FAILED TO FORCE RELOAD CONFIGURATION')
+
         
-        """configuration_file = "/etc/sysctl.conf"
+        configuration_file = "/etc/sysctl.conf"
 
         if os.path.isfile(configuration_file):
             with open(configuration_file, "r") as config:
@@ -206,7 +200,15 @@ class System:
             data.append(f"{config}={ipv6_configuration[config]}\n")
 
         with open(configuration_file,"w") as config_file:
-            config_file.writelines(data)"""
+            config_file.writelines(data)
+
+        if not dryrun:
+            try:
+                run(['sysctl','-p'])
+                print(f'✅ {Fore.WHITE}SYSCTL FORCE RELOAD CONFIGURATION')
+            except Exception as e:
+                print(e)
+                print(f'❌ {Fore.WHITE}SYSCTL FAILED TO FORCE RELOAD CONFIGURATION')
 
     def set_hostname(host_infos,ScriptSettings):
 
