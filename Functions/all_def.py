@@ -296,6 +296,8 @@ class System:
         cache = apt.Cache()
         cache.open()
 
+        print(f"\nℹ️ {Fore.WHITE} DOWNLOAD PACKAGES")
+
         for package in packages:
             if cache[package].is_installed:
               print(f'ℹ️  {Fore.WHITE}{package} Already installed')
