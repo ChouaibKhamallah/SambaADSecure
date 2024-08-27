@@ -172,13 +172,11 @@ class System:
             else:
                 print(f'{Fore.WHITE}{Back.RED}Invalid input. Please enter yes/no.{Style.RESET_ALL}')
 
-    def disable_ipv6():
+    def disable_ipv6(configuration_file=None):
 
         ipv6_configuration = {  "net.ipv6.conf.all.disable_ipv6":"1",
                                 "net.ipv6.conf.default.disable_ipv6":"1"
                             }
-        
-        configuration_file = "/etc/sysctl.conf"
 
         if os.path.isfile(configuration_file):
             with open(configuration_file, "r") as config:
@@ -325,11 +323,11 @@ class System:
                 except Exception as e:
                     print(f'❌ {Fore.WHITE}{service} unable to stop service')
 
-                try:
-                    call(["systemctl","disable",service],stdout=DEVNULL,stderr=STDOUT)
-                    print(f'✅ {Fore.WHITE}{service} service disabled')
-                except Exception as e:
-                    print(f'❌ {Fore.WHITE}{service} unable to disable service')
+            try:
+                call(["systemctl","disable",service],stdout=DEVNULL,stderr=STDOUT)
+                print(f'✅ {Fore.WHITE}{service} service disabled')
+            except Exception as e:
+                print(f'❌ {Fore.WHITE}{service} unable to disable service')
     
     def install_samba_ad(packages):
 
@@ -337,6 +335,20 @@ class System:
         run(["export","DEBIAN_FRONTEND=noninteractive"])
         System.install_packages(packages)
         run(["unset","DEBIAN_FRONTEND"])
+    
+    def configure_hosts_file(user_choices):
 
+        print(f"\nℹ️ {Fore.WHITE} /ETC/HOSTS CONFIGURATION")
 
+        with open("/etc/hosts","r") as hosts_file:
+            data = hosts_file.readlines()
+        
+        for line in data:
+            if user_choices["sambaad_ip"] in line:
+                data.remove(line)
+        
+        data.append(f"{user_choices["sambaad_ip"]} {user_choices["hostname"]}.{user_choices["domain_full_name"]}   {user_choices["hostname"]}\n")
+
+        with open("/etc/hosts","w") as hosts_file:
+            hosts_file.writelines(data)
 

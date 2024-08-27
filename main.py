@@ -13,11 +13,15 @@ def launch_script_process():
     host_infos = System.get_host_infos()
 
     if user_choices['create_domain']:
+
       System.interface_configuration(host_infos)
+      
       if user_choices["disable_ipv6"]:
-        System.disable_ipv6()
+        System.disable_ipv6(configuration_file="/etc/sysctl.conf")
+
       System.set_hostname(host_infos,ScriptSettings)
       System.add_samba_repository(SambaADRequirements,host_infos)
+      System.configure_hosts_file(host_infos)
       System.disable_services(SambaADRequirements[host_infos['distribution']]["services_to_disable_before_install"])
       System.install_packages(SambaADRequirements[host_infos['distribution']]["system_packages"])
       System.install_packages(SambaADRequirements[host_infos['distribution']]["samba_packages"])
